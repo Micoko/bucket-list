@@ -249,7 +249,7 @@ const App = () => {
           barStyle="light-content"
           backgroundColor={theme.background}
         />
-        <Title>TODO List</Title>
+        <Title>BUCKET List</Title>
         <Input
           placeholder="+ Add a Task "
           value={newTask}
