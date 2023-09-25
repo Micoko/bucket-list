@@ -213,7 +213,7 @@ const App = () => {
   const AllCheckedDeleteButton = ({ checkedTaskIds, tasks }) => {
     const handlePressOut = () => {
 
-      Alert.alert('단건삭제', '삭제하시겠습니까?', [
+      Alert.alert('완료항목 전체삭제', '삭제하시겠습니까?', [
         {
           text: '아니오',
           // onPress: null,
