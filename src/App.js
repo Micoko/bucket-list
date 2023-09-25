@@ -1,6 +1,6 @@
 // 로컬에 CRUD
 import React, { useState, useEffect, useCallback } from 'react';
-import { Text, Pressable, StatusBar, Dimensions, View, StyleSheet } from 'react-native';
+import { Text, Pressable, StatusBar, Dimensions, View, StyleSheet, Alert } from 'react-native';
 import styled, { ThemeProvider } from 'styled-components/native';
 import { theme } from './theme';
 import Input from './components/Input';
@@ -158,10 +158,24 @@ const App = () => {
 
   // 할일 항목 삭제
   const h_deleteTask = id => {
-    const currentTasks = { ...tasks };
-    delete currentTasks[id];
-    // setTasks(currentTasks);
-    saveTasks(currentTasks);
+    //삭제여부체크
+    Alert.alert('단건삭제', '삭제하시겠습니까?', [
+      {
+        text: '아니오',
+        // onPress: null,
+        style: 'cancel', // ios 스타일 적용
+      },
+      {
+        text: '예',
+        onPress: () => {
+          const currentTasks = { ...tasks };
+          delete currentTasks[id];
+          // setTasks(currentTasks);
+          saveTasks(currentTasks);
+        }
+      }
+    ]);
+
   };
 
   // 할일 항목 완료/미완료
@@ -195,14 +209,28 @@ const App = () => {
     setNewTask('');
   };
 
-  //////////////////////////////////
+  /////////////////AllCheckedDeleteButton/////////////////
   const AllCheckedDeleteButton = ({ checkedTaskIds, tasks }) => {
     const handlePressOut = () => {
-      const updatedTasks = { ...tasks };
-      checkedTaskIds.forEach(Id => {
-        delete updatedTasks[Id]; // 각 항목을 삭제합니다.
-      });
-      setTasks(updatedTasks); // 모든 항목을 삭제한 후 tasks 상태를 업데이트합니다.
+
+      Alert.alert('단건삭제', '삭제하시겠습니까?', [
+        {
+          text: '아니오',
+          // onPress: null,
+          style: 'cancel', // ios 스타일 적용
+        },
+        {
+          text: '예',
+          onPress: () => {
+            const updatedTasks = { ...tasks };
+            checkedTaskIds.forEach(Id => {
+              delete updatedTasks[Id];
+            });
+            saveTasks(updatedTasks);
+          }
+        }
+      ]);
+
     };
 
     return (
@@ -211,7 +239,7 @@ const App = () => {
       </Pressable>
     );
   };
-  //////////////////////////////////
+  //////////////////AllCheckedDeleteButton////////////////
 
 
   return (
